@@ -60,7 +60,7 @@ export default function Home() {
       </Head>
       <main className='h-auto w-auto'>
         <div className=" min-h-screen w-screen bg-bg_color">
-      <div className="mx-auto w-64 h-48 overflow-hidden"><Image  src={LogoTrans} alt="Classic Coast Logo" /></div>
+      <div className="mx-auto w-64 h-48 overflow-hidden"></div>
       
       <h1 className="text-dark_blue  font-khand font-bold text-center text-4xl">
         Log In

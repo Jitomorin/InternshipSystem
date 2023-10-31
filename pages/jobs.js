@@ -10,6 +10,8 @@ import { firestore } from "../firebase/firebase";
 import Select from "react-select";
 import { useRouter } from "next/router";
 import { Alert } from "@mui/material";
+import Link from "next/link";
+import { generateSlug } from "../utils/formatString";
 
 const Jobs = () => {
   const  {currentUser,isUserLoading} = useAuthContext();
@@ -103,60 +105,62 @@ const Jobs = () => {
           <div className="text-center p-10 text-4xl h-full">
             <h1>No jobs</h1>
         </div>
-          ): (
-            <div className="flex flex-col h-full">
-          {jobs.map((job) => {
-            return (
-              <div key={job.uid} className="flex m-4 ">
-                <div className="mr-10 flex flex-row p-3 justify-between align-middle space-x-10">
-                  
-                  <div className="flex flex-col">
-                    <h1 className="text-2xl text-gray-400 font-bold">
-                      Job Title
-                    </h1>
-                    <h1 className="text-2xl  font-bold">{job.title}</h1>
-
-                    
-                  </div>
-                  <div className="flex flex-col ml">
-                    <span>
-                      <h1 className="text-gray-400 font-bold">
-                       Position
-                      </h1>
-                      <h2>{job.position} PM</h2>
-                    </span>
-                    <span>
-                      <h1 className="text-gray-400 font-bold">Address</h1>
-                      <h2>{job.Address}</h2>
-                    </span>
-                    <span>
-                      <h1 className="text-gray-400 font-bold">Type</h1>
-                      <h2>{job.type}</h2>
-                    </span>
-                  </div>
-                  <div className="flex flex-col space-y-3">
-                    <div className="flex flex-col justify-start">
-                      <h1 className="text-gray-400 font-bold">
-                        Starting Salary
-                      </h1>
-                      <h1>{job.salary+' Ksh'}</h1>
-                    </div>
-                  </div>
-                  
-
-                  <div>
-                    <button
-                      className="bg-pink_red rounded-md p-2 text-white mx-2"
-                      
-                    >
-                      Learn More
-                    </button>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+            ) : (
+                
+                <section className="text-gray-600 body-font overflow-hidden">
+  <div className="container px-5 py-24 mx-auto">
+    <div className="flex flex-wrap -m-12">
+    
+                      {
+                        jobs.map((job) => {
+                          return (
+                            <div key={job.uid} className="p-12 md:w-1/2 flex flex-col items-start">
+        <span className="inline-block py-1 px-2 rounded bg-indigo-50 text-indigo-500 text-xs font-medium tracking-widest">{ job.type}</span>
+                              <h2 className="sm:text-3xl text-2xl title-font font-medium text-gray-900 mt-4 mb-4">{ job.title}</h2>
+                              {/* <p className="leading-relaxed mb-8">{job.position}</p> */}
+                              <span className="flex-grow flex flex-col mb-8">
+            <span className="title-font font-medium text-gray-900">Position</span>
+            <span className="text-gray-400 text-xs tracking-widest mt-0.5">{ job.position}</span>
+                              </span>
+                              <a className="inline-flex items-center">
+          {/* <Image alt="blog" layout='fill' src="https://dummyimage.com/104x104" className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"/> */}
+          <span className="flex-grow flex flex-col mb-4">
+            <span className="title-font font-medium text-gray-900">Salary</span>
+            <span className="text-gray-400 text-xs tracking-widest mt-0.5">{ job.salary+'Ksh Per Month'}</span>
+          </span>
+        </a>
+        <div className="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100 mt-auto w-full ">
+                                <Link passHref href={`/jobs/${generateSlug(job.uid)}`} className="text-indigo-500 inline-flex items-center ">
+                                  <h1 className="hover:text-indigo-500 hover:scale-105 hover:cursor-pointer flex align-middle justify-center space-x-4 font-bold">
+                                    Learn More
+                                    {/* <svg classname="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"></path>
+              <path d="M12 5l7 7-7 7"></path>
+            </svg> */}
+                                 </h1>
+                                    
+                                
+          </Link>
+          <span className="text-gray-400 mr-3 inline-flex items-center ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
+            <svg className="w-4 h-4 mr-1" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>1.2K
+          </span>
+          <span className="text-gray-400 inline-flex items-center leading-none text-sm">
+            <svg className="w-4 h-4 mr-1" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+              <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
+            </svg>{job.applications.length}
+          </span>
         </div>
+        
+      </div>
+                          );
+                        }
+                        )}
+    </div>
+  </div>
+</section>
           )
                 }
       </section>
@@ -166,3 +170,4 @@ const Jobs = () => {
 };
 
 export default Jobs;
+

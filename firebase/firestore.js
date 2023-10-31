@@ -1,3 +1,4 @@
+import { generateSlug } from "../utils/formatString";
 import { firestore } from "./firebase";
 import { v4 as uuidv4 } from "uuid";
 
@@ -89,10 +90,32 @@ const uid=uuidv4()
 //     date: date,
 //   }).then(() => {
 //     console.log("booking changes made")
-//   }).catch((error) => { 
+//   }).catch((error) => {
 //     console.log(error)
 //   })
 // }
+async function getAllJobsSlugs() {
+  let slugs=[]
+  firestore.collection("jobs").get().then((snapshot) => { 
+    snapshot.docs.forEach((doc) => {
+      let uid = doc.data().uid
+      let slug=generateSlug(uid)
+      slugs.push(slug)
+    })
+    return slugs.map((slug) => {
+      slug
+    });
+  })
+}
+async function getJobBySlug(slug) {
+  // let slugs=[]
+  console.log(slug)
+  firestore.collection("jobs").where("uid", slug).get().then((snapshot) => { 
+    return snapshot.docs.map((doc) => {
+      doc.data()
+    });
+  })
+}
 
 async function addBus(dep_time, seats, num_plate, routeID) {
   const uid = uuidv4();
@@ -193,12 +216,14 @@ export {
   getAllUsers,
   getUserDetails,
   getStops,
+  getAllJobsSlugs,
   addBus,
   deleteBus,
   deleteRoute,
   cancelBooking,
   approveBooking,
   addRoutes,
+  getJobBySlug,
   addBooking,
   editBus,
   editRoute,
