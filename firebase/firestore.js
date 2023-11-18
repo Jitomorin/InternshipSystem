@@ -30,201 +30,37 @@ function getUserDetails(uid) {
       console.log(snapshot.data());
     });
 }
-async function deleteRoute(uid) {
-  firestore
-    .collection("routes")
-    .doc(uid)
-    .delete()
-    .then(() => {
-      console.log("route deleted");
-    });
-}
-async function deleteBus(uid) {
-  firestore
-    .collection("busses")
-    .doc(uid)
-    .delete()
-    .then(() => {
-      console.log("bus deleted");
-    });
-}
-async function cancelBooking(uid) {
-  firestore
-    .collection("bookings")
-    .doc(uid)
-    .delete()
-    .then(() => {
-      console.log("route deleted");
-    });
-}
-async function approveBooking(uid) {
-  firestore.collection('bookings').doc(uid).update({paid:true}).then(() => { console.log('Booking payment approved')}).catch((error) => { console.log(error)})
-  
-}
-function addBooking(userID, busID, routeID, departure_time,num_of_tickets,total_price,date) {
-const uid=uuidv4()
 
-  firestore.collection("bookings").doc(uid).set({
-    uid: uid,
-    user_uid: userID,
-    bus_id: busID,
-    route_id: routeID,
-    departure_time: departure_time,
-    number_of_tickets: num_of_tickets,
-    total_price: total_price,
-    date: date,
-    paid: false,
-  }).then(() => {
-    console.log("booking made")
-  }).catch((error) => { 
-    console.log(error)
-  })
-}
-// function editBooking( uid,busID, routeID, departure_time,num_of_tickets,date) {
-//   firestore.collection("bookings").doc(uid).update({
-//     bus_id: busID,
-//     route_id: routeID,
-//     departure_time: departure_time,
-//     number_of_tickets: num_of_tickets,
-//     total_price: num_of_tickets*1000,
-//     date: date,
-//   }).then(() => {
-//     console.log("booking changes made")
-//   }).catch((error) => {
-//     console.log(error)
-//   })
-// }
 async function getAllJobsSlugs() {
-  let slugs=[]
-  firestore.collection("jobs").get().then((snapshot) => { 
-    snapshot.docs.forEach((doc) => {
-      let uid = doc.data().uid
-      let slug=generateSlug(uid)
-      slugs.push(slug)
-    })
-    return slugs.map((slug) => {
-      slug
+  let slugs = [];
+  firestore
+    .collection("jobs")
+    .get()
+    .then((snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        let uid = doc.data().uid;
+        let slug = generateSlug(uid);
+        slugs.push(slug);
+      });
+      return slugs.map((slug) => {
+        slug;
+      });
     });
-  })
 }
 async function getJobBySlug(slug) {
   // let slugs=[]
-  console.log(slug)
-  firestore.collection("jobs").where("uid", slug).get().then((snapshot) => { 
-    return snapshot.docs.map((doc) => {
-      doc.data()
-    });
-  })
-}
-
-async function addBus(dep_time, seats, num_plate, routeID) {
-  const uid = uuidv4();
+  console.log(slug);
   firestore
-    .collection("busses")
-    .doc(uid)
-    .set({
-      departure_time: dep_time,
-      number_of_seats: seats,
-      number_plate: num_plate,
-      routes_uid: routeID,
-      uid: uid,
-    })
-    .then(() => {
-      console.log("bus added");
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
-async function editBus(uid,dep_time, seats, num_plate, routeID) {
-  firestore
-    .collection("busses")
-    .doc(uid)
-    .update({
-      departure_time: dep_time,
-      number_of_seats: seats,
-      number_plate: num_plate,
-      routes_uid: routeID,
-    })
-    .then(() => {
-      console.log("bus changes made");
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
-async function addRoutes(from, to) {
-  let isPresent = false;
-  const uid = uuidv4();
-  firestore
-    .collection("routes")
-    .where("from.name", "==", from.name)
-    .where("to.name", "==", to.name)
+    .collection("jobs")
+    .doc(slug)
     .get()
     .then((snapshot) => {
-      isPresent = !snapshot.empty;
-      if (isPresent) {
-        console.log("route already exists");
-      } else {
-        firestore
-          .collection("routes")
-          .doc(uid)
-          .set({
-            from: from,
-            to: to,
-            uid: uid,
-          })
-          .then(() => {
-            console.log("Route added");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    });
-}
-async function editRoute(uid,from, to) {
-        firestore
-          .collection("routes")
-          .doc(uid)
-          .update({
-            from: from,
-            to: to,
-            
-          })
-          .then(() => {
-            console.log("Route changes made");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      
-    
-}
-async function getStops() {
-  firestore
-    .collection("stops")
-    .get()
-    .then(function (snapshot) {
-      console.log(snapshot);
-      return snapshot;
+      console.log("result: ", snapshot.data());
+      return snapshot.data();
+      // return snapshot.docs.map((doc) => {
+      //   doc.data();
+      // });
     });
 }
 
-export {
-  addUser,
-  getAllUsers,
-  getUserDetails,
-  getStops,
-  getAllJobsSlugs,
-  addBus,
-  deleteBus,
-  deleteRoute,
-  cancelBooking,
-  approveBooking,
-  addRoutes,
-  getJobBySlug,
-  addBooking,
-  editBus,
-  editRoute,
-};
+export { addUser, getAllUsers, getUserDetails, getAllJobsSlugs, getJobBySlug };

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Image from "next/image";
 import LogoTrans from "../public/logo/classic_coast_logo_trans.svg";
 import { authContext, useAuthContext } from "../context/UserContext";
@@ -7,15 +7,25 @@ import { auth } from "../firebase/firebase";
 import { useRouter } from "next/router";
 
 const Header = () => {
-  const {
-    currentUser,
-   isUserLoading
-  } = useAuthContext();
+  const { currentUser, isUserLoading } = useAuthContext();
+
+  useEffect(() => {
+    if (!isUserLoading && !currentUser) {
+      console.log("something is wrong");
+      console.log(isUserLoading);
+      console.log(currentUser);
+      router.push("/");
+    }
+  }, [currentUser, isUserLoading]);
+
   const router = useRouter();
+  const currentPath = router.pathname;
+  console.log(currentPath);
+
   return (
     <div>
       <nav className="bg-white  shadow ">
-        <div className="max-w-7xl mx-auto px-8">
+        <div className=" mx-auto px-8">
           <div className="flex items-center justify-between h-16">
             <div className="w-full justify-between flex items-center">
               <Link className="flex-shrink-0 cursor-pointer font-bold" href="/">
@@ -34,28 +44,40 @@ const Header = () => {
                     className="text-gray-300 hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium"
                     href="/home"
                   >
-                    Home
+                    {currentPath === "/home" ? (
+                      <p className=" text-[16px] text-pink_red px-3 py-2 rounded-md font-medium cursor-pointer">
+                        Home
+                      </p>
+                    ) : (
+                      <p className="text-black text-[16px] hover:bg-[rgba(185,115,117,0.6)] hover:text-white px-3 py-2 rounded-md font-medium cursor-pointer">
+                        Home
+                      </p>
+                    )}
                   </Link>
 
                   <Link
-                    className="text-gray-300 hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium"
+                    className="text-pink_red hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium"
                     href="/jobs"
                   >
-                    Jobs
+                    {currentPath === "/jobs" ? (
+                      <p className=" text-[16px] text-pink_red px-3 py-2 rounded-md font-medium cursor-pointer">
+                        Jobs
+                      </p>
+                    ) : (
+                      <p className="text-black text-[16px] hover:bg-[rgba(185,115,117,0.6)] hover:text-white px-3 py-2 rounded-md font-medium cursor-pointer">
+                        Jobs
+                      </p>
+                    )}
                   </Link>
-                  {
-                    currentUser.admin ? (
-                    <Link
-                    className="text-gray-300 hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium"
-                    href="/admin"
-                      >
-                        <span className="underline text-pink_red cursor-pointer">Admin</span>
-                    
-                  </Link>
-                    ): (
-                      <></>
-                    )
-                  }
+                  {currentUser.organisation ? (
+                    <Link href="/admin">
+                      <span className="underline text-pink_red cursor-pointer">
+                        Admin
+                      </span>
+                    </Link>
+                  ) : (
+                    <></>
+                  )}
                   <a
                     onClick={async () => {
                       await auth
@@ -69,7 +91,7 @@ const Header = () => {
 
                       router.push("/");
                     }}
-                    className="underline text-pink_red cursor-pointer"
+                    className="underline  cursor-pointer"
                   >
                     Log Out
                   </a>

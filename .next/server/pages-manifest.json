@@ -1,15 +1,7 @@
 {
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
-  "/admin": "pages/admin.js",
-  "/api/hello": "pages/api/hello.js",
-  "/auth_check": "pages/auth_check.js",
-  "/book": "pages/book.js",
-  "/home": "pages/home.js",
-  "/": "pages/index.js",
-  "/jobs": "pages/jobs.js",
-  "/login": "pages/login.js",
-  "/results": "pages/results.js",
-  "/signup": "pages/signup.js",
-  "/_document": "pages/_document.js"
+  "/_document": "pages/_document.js",
+  "/jobs/[slug]": "pages/jobs/[slug].js",
+  "/home": "pages/home.js"
 }

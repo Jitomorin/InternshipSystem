@@ -38,12 +38,11 @@ export default function Home() {
       
     });
   };
-  // useEffect(() => {
-  //   if (isUserLoading && currentUser) {
-  //     console.log('to home')
-  //     router.push("/home");
-  //   } 
-  // }, [currentUser, isUserLoading]);
+  useEffect(() => {
+    if (currentUser) {
+      router.push("/home");
+    }
+  }, [currentUser, isUserLoading]);
 
  if(isUserLoading){
    return <div className="flex flex-col items-center justify-center h-screen">
