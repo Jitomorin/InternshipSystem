@@ -8,6 +8,7 @@ import LoadingAnimaton from "../../public/loading_anim.webp";
 import Image from "next/image";
 import { useAuthContext } from "context/UserContext";
 import { Button } from "@/components/ui/button";
+import NestedModal from "./nested-modal";
 
 export default function JopbSlugRoute(props) {
   const { currentUser, isUserLoading } = useAuthContext();
@@ -47,9 +48,8 @@ export default function JopbSlugRoute(props) {
               <p className="text-xl">{"Pay per month: "}</p>
               <h1 className="text-xl font-bold ">{props.job.salary+'Ksh'}</h1>
             </div>
-            <Button variant="primary" className="w-1/5 hover:scale-105 bg-pink_red text-white text-xl px-2 mt-10">
-              Apply
-            </Button>
+            <NestedModal btnName="Apply" job={props.job} />
+            
           </div>
         </main>
       </div>
