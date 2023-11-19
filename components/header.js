@@ -8,20 +8,21 @@ import { useRouter } from "next/router";
 
 const Header = () => {
   const { currentUser, isUserLoading } = useAuthContext();
-
-  useEffect(() => {
+  const router = useRouter();
+  const currentPath = router.pathname;
+  console.log(currentPath);
+ useEffect(() => {
     if (!isUserLoading && !currentUser) {
       console.log("something is wrong");
       console.log(isUserLoading);
       console.log(currentUser);
       router.push("/");
+
+      if(!currentUser){
+        router.push('/')
+      }
     }
   }, [currentUser, isUserLoading]);
-
-  const router = useRouter();
-  const currentPath = router.pathname;
-  console.log(currentPath);
-
   return (
     <div>
       <nav className="bg-white  shadow ">
@@ -49,7 +50,7 @@ const Header = () => {
                         Home
                       </p>
                     ) : (
-                      <p className="text-black text-[16px] hover:bg-[rgba(185,115,117,0.6)] hover:text-white px-3 py-2 rounded-md font-medium cursor-pointer">
+                      <p className="text-black text-[16px] hover:text-pink_red px-3 py-2 rounded-md font-medium cursor-pointer">
                         Home
                       </p>
                     )}
@@ -64,12 +65,12 @@ const Header = () => {
                         Jobs
                       </p>
                     ) : (
-                      <p className="text-black text-[16px] hover:bg-[rgba(185,115,117,0.6)] hover:text-white px-3 py-2 rounded-md font-medium cursor-pointer">
+                      <p className="text-black text-[16px] hover:text-pink_red px-3 py-2 rounded-md font-medium cursor-pointer">
                         Jobs
                       </p>
                     )}
                   </Link>
-                  {currentUser.organisation ? (
+                  {/* {currentUser.organisation ? (
                     <Link href="/admin">
                       <span className="underline text-pink_red cursor-pointer">
                         Admin
@@ -77,7 +78,7 @@ const Header = () => {
                     </Link>
                   ) : (
                     <></>
-                  )}
+                  )} */}
                   <a
                     onClick={async () => {
                       await auth

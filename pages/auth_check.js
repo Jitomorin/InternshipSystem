@@ -6,7 +6,7 @@ const AuthCheck = ({ children }) => {
   const router=useRouter()
   const authContext=useAuthContext()
   if (!authContext.currentUser) {
-    return router.push("/login");
+    return router.push("/");
   }
   return router.push("/home");
 }

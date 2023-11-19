@@ -11,6 +11,7 @@ import Select from "react-select";
 import { useRouter } from "next/router";
 import { Alert } from "@mui/material";
 import Link from "next/link";
+import { RouteChangeCheck } from "@/utils/RouteChangeCheck";
 
 const Home = () => {
   const  {currentUser,isUserLoading} = useAuthContext();
@@ -29,12 +30,7 @@ const Home = () => {
     });
     return options;
   };
-  // const isUserLoggedIn = () => {
-  //   if (authContext.user) {
-  //   } else {
-  //     routes.push("/login");
-  //   }
-  // };
+ 
 
   useEffect(() => {
       
@@ -51,13 +47,16 @@ const Home = () => {
   
   if (isUserLoading) {  
     return (
-      <div className="flex flex-col items-center justify-center h-screen">
+      <RouteChangeCheck>
+        <div className="flex flex-col items-center justify-center h-screen">
         <Image src={LoadingAnimaton} alt="Loading..." />
       </div>
+      </RouteChangeCheck>
     );
   } else {
     return (
-    <div className="min-h-screen w-screen">
+      <RouteChangeCheck>
+        <div className="min-h-screen w-screen">
       <Header />
       <div className="bg-[url('../public/images/stock-banner.jpg')] bg-no-repeat bg-cover bg-center h-[40vh] relative ">
         
@@ -66,17 +65,17 @@ const Home = () => {
         <h1 className="text-center text-4xl font-melodrama">How it works</h1>
         <div className="grid grid-cols-1 md:grid-cols-3 justify-center space-x-8 items-center  my-6">
           <div className="flex-col space-y-5">
-            <h3 className="text-xl text-center font-melodrama">Book</h3>
+         
             <div className="bg-[url('../public/images/book.jpg')] bg-cover h-56 w-64 rounded-md mx-auto"></div>
             <p className="text-center text-2xl">Find your internship oppurtunity</p>
           </div>
           <div className="flex-col space-y-5">
-            <h3 className="text-xl text-center font-melodrama">Pay</h3>
+       
             <div className="bg-[url('../public/images/application.jpg')] bg-cover h-56 w-64 rounded-md mx-auto"></div>
             <p className="text-center text-2xl">Fill in the application form</p>
           </div>
           <div className="flex-col space-y-5">
-            <h3 className="text-xl text-center font-melodrama">Ticket</h3>
+ 
             <div className="bg-[url('../public/images/hired.jpg')] bg-cover h-56 w-64 rounded-md mx-auto"></div>
             <p className="text-center text-2xl">Wait for good news</p>
           </div>
@@ -94,6 +93,7 @@ const Home = () => {
           </div>
       </section>
     </div>
+    </RouteChangeCheck>
   );
   }
 };

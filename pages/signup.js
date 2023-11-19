@@ -13,6 +13,7 @@ import { TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getDownloadURL } from "firebase/storage";
+import { RouteChangeCheck } from "@/utils/RouteChangeCheck";
 
 const Signup = () => {
   const router = useRouter();
@@ -52,7 +53,7 @@ const Signup = () => {
               })
               .then(() => {
                 console.log("organisation added to database!");
-                router.push("/login");
+                router.push("/");
               });
           });
       } else {
@@ -79,7 +80,7 @@ const Signup = () => {
                   })
                   .then(() => {
                     console.log("user added to database!");
-                    router.push("/login");
+                    router.push("/");
                   });
               });
             });
@@ -99,7 +100,8 @@ const Signup = () => {
   };
 
   return (
-    <div className=" min-h-screen w-screen bg-bg_color">
+    <RouteChangeCheck>
+      <div className=" min-h-screen w-screen bg-bg_color">
       <div className="flex flex-col space-y-8 w-1/4 mx-auto justify-center my-auto pt-10 ">
         {/* <div className="mx-auto w-64 h-48 overflow-hidden"><Image  src={LogoTrans} alt="Classic Coast Logo" /></div> */}
         <h1 className="text-dark_blue font-bold text-center text-4xl ">
@@ -180,7 +182,7 @@ const Signup = () => {
                 <span className="text-dark_blue">
                   {"Already have an Account? "}
                 </span>
-                <Link href="/login">
+                <Link href="/">
                   <span className="text-pink_red underline cursor-pointer">
                     Log In
                   </span>
@@ -232,7 +234,7 @@ const Signup = () => {
                 <span className="text-dark_blue">
                   {"Already have an Account? "}
                 </span>
-                <Link href="/login">
+                <Link href="/">
                   <span className="text-pink_red underline cursor-pointer">
                     Log In
                   </span>
@@ -243,6 +245,7 @@ const Signup = () => {
         </Tabs>
       </div>
     </div>
+    </RouteChangeCheck>
   );
 };
 

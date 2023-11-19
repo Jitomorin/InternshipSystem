@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { Alert } from "@mui/material";
 import Link from "next/link";
 import { generateSlug } from "../../utils/formatString";
+import { RouteChangeCheck } from "@/utils/RouteChangeCheck";
 
 const Jobs = () => {
   const { currentUser, isUserLoading } = useAuthContext();
@@ -30,12 +31,7 @@ const Jobs = () => {
     });
     return options;
   };
-  // const isUserLoggedIn = () => {
-  //   if (authContext.user) {
-  //   } else {
-  //     routes.push("/login");
-  //   }
-  // };
+
 
   useEffect(() => {
     if (!isUserLoading && !currentUser) {
@@ -74,13 +70,17 @@ const Jobs = () => {
   // isUserLoggedIn();
   if (isUserLoading) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen">
+      <RouteChangeCheck>
+        <div className="flex flex-col items-center justify-center h-screen">
         <Image src={LoadingAnimaton} alt="Loading..." />
       </div>
+      </RouteChangeCheck>
+      
     );
   } else {
     return (
-      <div className="min-h-screen w-screen">
+      <RouteChangeCheck>
+        <div className="min-h-screen w-screen">
         <Header />
 
         <section className="my-14" id="how_section">
@@ -195,6 +195,7 @@ const Jobs = () => {
        
         </section>
       </div>
+      </RouteChangeCheck>
     );
   }
 };

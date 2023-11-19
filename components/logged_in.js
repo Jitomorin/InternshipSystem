@@ -9,7 +9,7 @@ const LoggedIn = () => {
 
   useEffect(() => {
     if (!loading && !authContext) {
-      router.push("/login");
+      router.push("/");
     } else {
       router.push("/home");
     }

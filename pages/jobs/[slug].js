@@ -48,7 +48,7 @@ export default function JopbSlugRoute(props) {
               <p className="text-xl">{"Pay per month: "}</p>
               <h1 className="text-xl font-bold ">{props.job.salary+'Ksh'}</h1>
             </div>
-            <NestedModal btnName="Apply" job={props.job} />
+            <NestedModal btnName="Apply" job={props.job} currentuser={currentUser}/>
             
           </div>
         </main>
