@@ -55,7 +55,32 @@ const Header = () => {
                       </p>
                     )}
                   </Link>
-
+                  {
+                    currentUser.admin && (
+                      <>
+                        {
+                          currentUser.admin === true ? (
+                          <Link
+                    className="text-pink_red hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium"
+                    href="/admin"
+                  >
+                    {currentPath === "/admin" ? (
+                      <p className=" text-[16px] text-pink_red px-3 py-2 rounded-md font-medium cursor-pointer">
+                        Admin
+                      </p>
+                    ) : (
+                      <p className="text-black text-[16px] hover:text-pink_red px-3 py-2 rounded-md font-medium cursor-pointer">
+                        Admin
+                      </p>
+                    )}
+                  </Link>
+                          ): (
+                              <></>
+                          )
+                        }
+                      </>
+                    )
+                      }
                   <Link
                     className="text-pink_red hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium"
                     href="/jobs"
